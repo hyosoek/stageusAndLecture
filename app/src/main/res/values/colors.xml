@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="burgerking_red">#FFC63720</color>
+    <color name="burgerking_orange">#FFEF8C47</color>
+    <color name="burgerking_brown">#FF4B2618</color>
+    <color name="burgerking_white">#FFF3EBDE</color>
+    <color name="burgerking_green">#FF408542</color>
+    <color name="burgerking_yellow">#FFF3AE3E</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+
+</resources>

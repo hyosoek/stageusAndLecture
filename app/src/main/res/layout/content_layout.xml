@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:id="@+id/parent_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        ></LinearLayout>
+
+<!--    <TextView-->
+<!--        android:id="@+id/aaddaa"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="내용페이지임"-->
+<!--        android:gravity="center"-->
+<!--        android:background="@color/black"-->
+<!--        app:layout_constraintTop_toTopOf="parent"></TextView>-->
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
