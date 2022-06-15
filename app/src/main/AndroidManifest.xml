@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ContentActivity"/>
+        <service android:name=".BgmService"/>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.example.stageus_android_lecuture
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -42,6 +43,19 @@ class MainActivity : AppCompatActivity(), DataFromFragment {
         supportFragmentManager.beginTransaction().replace(R.id.fragmentBox, fragmentTemp).commit()//가져온 프래그먼트를 붙여줍니다. 첫번째는 위치, 두번째는 물건
 
         initEvent()
+
+
+
+
+
+
+        //서비스 실행*********************
+        var intent = Intent(this, BgmService::class.java)
+        startService(intent)
+        //서비스 실행*********************
+
+
+
     }
 //레이아웃의 뷰를 가져오는 방법
 
@@ -65,6 +79,12 @@ class MainActivity : AppCompatActivity(), DataFromFragment {
             supportFragmentManager.beginTransaction().replace(R.id.fragmentBox, fragmentTemp2).commit()//가져온 프래그먼트를 붙여줍니다. 첫번째는 위치, 두번째는 물건
         }
     }
+
+//    override fun onStop() {
+//        super.onStop()
+//        var intent = Intent(this, BgmService::class.java)
+//        stopService(intent)
+//    }
 
 
 

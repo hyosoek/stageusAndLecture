@@ -1,5 +1,6 @@
 package com.example.stageus_android_lecuture
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -65,10 +66,15 @@ class ContentActivity : AppCompatActivity() {
         dialog.setMessage("앱이 일시 정지 상태에 들어갔습니다.")
         dialog.create()
         dialog.show()
+
+        var intent = Intent(this, BgmService::class.java)
+        stopService(intent)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         Log.d("result_message","onDestroy가 실행됨")
     }
+
+
 }
