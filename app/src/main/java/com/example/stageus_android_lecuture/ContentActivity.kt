@@ -1,7 +1,11 @@
 package com.example.stageus_android_lecuture
 
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.util.Log
 import android.view.Menu
 import android.widget.LinearLayout
@@ -11,11 +15,32 @@ import androidx.appcompat.app.AppCompatActivity
 
 
 class ContentActivity : AppCompatActivity() {
+    private lateinit var mService: LocalService
+    private var mBound: Boolean = false
+
+    /** Defines callbacks for service binding, passed to bindService()  */
+    private val connection = object : ServiceConnection {
+
+        override fun onServiceConnected(className: ComponentName, service: IBinder) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            val binder = service as LocalService.LocalBinder
+            mService = binder.getService()
+            mBound = true
+        }
+
+        override fun onServiceDisconnected(arg0: ComponentName) {
+            mBound = false
+        }
+    }
+
+    override fun onUserLeaveHint() {
+        super.onUserLeaveHint()
+        Log.d("result_message","아이디 :  / 비밀번호 : ")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.content_layout)//레이아웃 지정 명령어
-
         val idValue = intent.getStringExtra("id_value")
         val pwValue = intent.getStringExtra("pw_value")
         Log.d("result_message","아이디 : ${idValue} / 비밀번호 : ${pwValue}")
@@ -39,6 +64,10 @@ class ContentActivity : AppCompatActivity() {
             customView.findViewById<TextView>(R.id.second_text).text = dataList[index][1]
             linearLayout.addView(customView)
         }
+        Intent(this, LocalService::class.java).also { intent ->
+            bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        }
+        Log.d("result_message","아이디 : ${mBound}  / 비밀번호 : 1")
     }
 
     override fun onStart() {

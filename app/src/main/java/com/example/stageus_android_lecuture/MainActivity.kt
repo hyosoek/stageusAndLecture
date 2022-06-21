@@ -44,21 +44,17 @@ class MainActivity : AppCompatActivity(), DataFromFragment {
 
         initEvent()
 
-
-
-
-
-
         //서비스 실행*********************
         var intent = Intent(this, BgmService::class.java)
         startService(intent)
         //서비스 실행*********************
 
-
-
     }
 //레이아웃의 뷰를 가져오는 방법
-
+    override fun onUserLeaveHint() {
+        super.onUserLeaveHint()
+        Log.d("result_message","아이디 :  / 비밀번호 : ")
+    }
     fun initEvent(){
         //로그인 누르면 이벤트 처리
         val logInButton = findViewById<Button>(R.id.loginBtn1)
