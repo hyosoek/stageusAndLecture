@@ -15,23 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 
 class ContentActivity : AppCompatActivity() {
-    private lateinit var mService: LocalService
-    private var mBound: Boolean = false
 
-    /** Defines callbacks for service binding, passed to bindService()  */
-    private val connection = object : ServiceConnection {
-
-        override fun onServiceConnected(className: ComponentName, service: IBinder) {
-            // We've bound to LocalService, cast the IBinder and get LocalService instance
-            val binder = service as LocalService.LocalBinder
-            mService = binder.getService()
-            mBound = true
-        }
-
-        override fun onServiceDisconnected(arg0: ComponentName) {
-            mBound = false
-        }
-    }
 
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
@@ -64,10 +48,6 @@ class ContentActivity : AppCompatActivity() {
             customView.findViewById<TextView>(R.id.second_text).text = dataList[index][1]
             linearLayout.addView(customView)
         }
-        Intent(this, LocalService::class.java).also { intent ->
-            bindService(intent, connection, Context.BIND_AUTO_CREATE)
-        }
-        Log.d("result_message","아이디 : ${mBound}  / 비밀번호 : 1")
     }
 
     override fun onStart() {

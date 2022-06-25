@@ -9,11 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Stageus_Android_Lecuture">
-        <service
-            android:name=".LocalService"
-            android:enabled="true"
-            android:exported="true"></service>
-
         <activity
             android:name=".MainActivity"
             android:exported="true">

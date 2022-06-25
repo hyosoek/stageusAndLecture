@@ -1,19 +1,68 @@
 package com.example.stageus_android_lecuture
 
+import android.accounts.Account
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import java.util.function.LongFunction
 
 //메인 액티비티에 들어가는 프래그먼트
 class SignUpFragment:Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.signup_fragment, container, false)
+        initData(view)
         initEvent(view)
         return view
+    }
+    fun initData(view:View){
+        Glide.with(view)
+            .load(R.drawable.test_image)
+            //.placeholder(R.drawable.red)//대기 이미지
+            //.thumbnail(0.1f)//같은 이미지 작게
+            //.override(300,200)//해상도가 적고 원본 크기를 바꿔줌
+            .circleCrop()
+           .into(view.findViewById(R.id.signup_image))
+        //여기서 실행하면 수행 못함.
+        val gson = GsonBuilder()
+         //   .setPrettyPrinting()//그저 옵션
+            .create()//초기화입니다 GLIDE처럼 옵션을 넣어줄 수 있음.
+        val gson2 = Gson()//위와 동일한 초기화 하지만, 추가 옵션 불가능
+
+
+
+        //data class는 구조체입니다.
+        //일반 클래스에서 함수 없이 매개변수만 따온 형태 - 최적화 된 것
+        data class Account( //코틀린의 자체 용법이고 gson이 아님
+            var id: String,
+            var pw: String
+            )
+        //클래스를 객체로 만든 형태
+        val myAccount = Account("스테이지어스","1234")
+        //여기부터 gson
+        val myAccountData = gson2.toJson(myAccount)
+        //이렇게 하면 myAccountData는 json의 형태를 가짐
+        Log.d("data",myAccountData)
+//여기까진 gson을 바탕으로 json 생성
+
+
+
+        //        var data = {
+//            "id":"stageus",
+//            "pw":"1234"
+//        } //위를  아래에 표현
+//        val myAccountData2 = gson.fromJson<Account>(data,Account::class.java) //이건 가져온 json을 보기 쉽게 바꿔주는거
+
     }
 
     fun initEvent(view : View){
@@ -27,4 +76,5 @@ class SignUpFragment:Fragment() {
             )
         }
     }
+
 }
