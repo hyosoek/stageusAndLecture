@@ -34,19 +34,16 @@ class MainActivity : AppCompatActivity(), DataFromFragment {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)//여기서 사용할 레이아웃을 확정해줬기 때문에, 레아아웃간의 뷰 이름은 겹쳐도 됩니다.
-
 //        val subLogo =findViewById<TextView>(R.id.sublogo)
 //        subLogo.text = "바뀐값"
-
         //fragment 가져오기
         val fragmentTemp = LogInFragment()//파일명을 가져와야함.
         supportFragmentManager.beginTransaction().replace(R.id.fragmentBox, fragmentTemp).commit()//가져온 프래그먼트를 붙여줍니다. 첫번째는 위치, 두번째는 물건
-
         initEvent()
 
         //서비스 실행*********************
-        var intent = Intent(this, BgmService::class.java)
-        startService(intent)
+//        var intent = Intent(this, BgmService::class.java)
+//        startService(intent)
         //서비스 실행*********************
 
     }

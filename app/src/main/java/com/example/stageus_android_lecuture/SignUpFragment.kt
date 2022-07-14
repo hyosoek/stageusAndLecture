@@ -1,6 +1,7 @@
 package com.example.stageus_android_lecuture
 
 import android.accounts.Account
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -15,13 +16,26 @@ import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
 import java.util.function.LongFunction
 
 //메인 액티비티에 들어가는 프래그먼트
 class SignUpFragment:Fragment() {
+    lateinit var retrofit: Retrofit //connection
+    lateinit var retrofitHttp: RetrofitService //cursor 역할
+    fun initRetrofit(){
+        retrofit = RetrofitClient.initRetrofit() //class면 client 뒤에 ()
+        retrofitHttp =  retrofit!!.create(RetrofitService::class.java)
+    }
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.signup_fragment, container, false)
-        initData(view)
+        //initData(view
+        initRetrofit()
         initEvent(view)
         return view
     }
@@ -61,19 +75,39 @@ class SignUpFragment:Fragment() {
 //            "id":"stageus",
 //            "pw":"1234"
 //        } //위를  아래에 표현
-//        val myAccountData2 = gson.fromJson<Account>(data,Account::class.java) //이건 가져온 json을 보기 쉽게 바꿔주는거
 
+//        val myAccountData2 = gson.fromJson<Account>(data,Account::class.java) //이건 가져온 json을 보기 쉽게 바꿔주는거
     }
 
     fun initEvent(view : View){
         //회원가입 버튼 이벤트 ->  부모한테 보내주는 기능 fragment to activity 데이터 전송 과정
         val signUpButton = view.findViewById<Button>(R.id.signUpBtn1)
+//        signUpButton.setOnClickListener(){
+//            val dataInterface = context as DataFromFragment //이 부분 열심히 합니다.
+//            dataInterface.sendData("Save Data",
+//                arrayOf(view.findViewById<EditText>(R.id.id_text).text.toString(),
+//                    view.findViewById<EditText>(R.id.pw_text).text.toString())
+//            )
         signUpButton.setOnClickListener(){
-            val dataInterface = context as DataFromFragment //이 부분 열심히 합니다.
-            dataInterface.sendData("Save Data",
-                arrayOf(view.findViewById<EditText>(R.id.id_text).text.toString(),
-                    view.findViewById<EditText>(R.id.pw_text).text.toString())
-            )
+            var requestData: HashMap<String,String> = HashMap() //자료형 고정
+            requestData["id"] = view.findViewById<EditText>(R.id.id_text).text.toString()
+            requestData["pw"] = view.findViewById<EditText>(R.id.pw_text).text.toString()
+            requestData["name"] = "stageus"
+            requestData["contact"] = "01099119598"
+
+            retrofitHttp.postAccount(requestData)//제이슨으로 받아오기에 담을 객체 바로 생성 가능
+                .enqueue(object: Callback<AccountData> {//enqueue가 비동기함수 + 비동기처리 됨 자동으로
+                override fun onFailure(call: Call<AccountData>, t: Throwable) {
+                    Log.d("result","Request Fail ${t}")//실패사유
+                }override fun onResponse(call: Call<AccountData>, response: Response<AccountData>) {
+                    if(response.body()!!.success) {
+                        Log.d("result","Request Success")//실패사유
+                    }
+                    else{
+                        Log.d("result","Request Fail : ${response.body()!!.success}")//실패사유
+                    }
+                }
+                })
         }
     }
 
